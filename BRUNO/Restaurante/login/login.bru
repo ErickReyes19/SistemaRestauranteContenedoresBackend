@@ -1,0 +1,19 @@
+meta {
+  name: login
+  type: http
+  seq: 1
+}
+
+get {
+  url: 
+  body: none
+  auth: none
+}
+
+script:post-response {
+  if(res.status==200){
+  const response=res.getBody();
+    const token =response.token;
+    bru.setEnvVar("token",token);
+  }
+}

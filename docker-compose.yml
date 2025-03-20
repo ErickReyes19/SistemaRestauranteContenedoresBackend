@@ -1,0 +1,59 @@
+﻿version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      TZ: ${TZ}
+    command: --default-time-zone='-06:00'
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql  # Persistencia de datos
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      retries: 5
+      start_period: 10s
+    networks:
+      - restaurante-network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: restaurante_api
+    restart: always
+    environment:
+      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
+      - MYSQL_HOST=${MYSQL_HOST}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - PORT=${PORT}
+      - TZ=${TZ}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro  # Sincroniza la zona horaria con el host
+    depends_on:
+      mysql:
+        condition: service_healthy
+    command: >
+      sh -c "echo 'Esperando a que MySQL esté disponible...';
+             while ! nc -z mysql_db 3306; do sleep 1; done;
+             echo 'MySQL está listo';
+             dotnet RestauranteBackend.dll"
+    ports:
+      - "8081:80"
+    networks:
+      - restaurante-network
+
+networks:
+  restaurante-network:
+    driver: bridge
+
+volumes:
+  mysql_data:  # Definir el volumen

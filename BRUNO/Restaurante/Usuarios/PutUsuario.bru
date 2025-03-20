@@ -1,0 +1,21 @@
+meta {
+  name: PutUsuario
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{url}}/api/Usuario/4d4d6798-a596-4bc9-bd0f-c46d7dd87794
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "id":"4d4d6798-a596-4bc9-bd0f-c46d7dd87794",
+    "usuario": "Erick.Reyesasaa",
+    "contrasena": "Erick.rseyess",
+    "role_id":"b1075145-e3dd-4154-a307-0ca90d44f451",
+    "empleado_id":"038b7bf8-eeb7-4d71-acb6-97e70d4a7647"
+  }
+}

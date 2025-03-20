@@ -1,0 +1,18 @@
+meta {
+  name: PutRol
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{url}}/api/Empleado/038b7bf8-eeb7-4d71-acb6-97e70d4a7647
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "nombre": "Admin",
+    "descripcion": "Rol administrador"
+  }
+}

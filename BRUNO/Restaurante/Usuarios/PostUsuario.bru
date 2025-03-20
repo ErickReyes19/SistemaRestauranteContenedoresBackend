@@ -1,0 +1,20 @@
+meta {
+  name: PostUsuario
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{url}}/api/Usuario/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "usuario": "Ersaickz.s",
+    "contrasena": "Ericzk.reyes",
+    "role_id":"b1075145-e3dd-4154-a307-0ca90d44f451",
+    "empleado_id":"98d259ae-b988-45da-9146-05661e14a36c"
+  }
+}

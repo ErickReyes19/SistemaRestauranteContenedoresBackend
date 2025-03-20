@@ -1,0 +1,22 @@
+meta {
+  name: PostEmpleados
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{url}}/api/Empleado
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "nombre": "Erick",
+    "apellido": "REyesss",
+    "correo":"erick.reyes@gmail.com",
+    "telefono": "22334455",
+    "edad": 26,
+    "genero": "Masculino"
+  }
+}
